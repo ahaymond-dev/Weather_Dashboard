@@ -11,17 +11,17 @@ function displayWeather() {
       }).then(function(response) {
           console.log(response);
           console.log(response.weather[0].icon);
-          
-        const weatherDiv = $("<div clas='weatherDiv'>");
+          $(".weather-view").empty();
+        const weatherDiv = $("<div class='weatherDiv'>");
           const currentCity = response.name;
-        //   const icon = $("<img>").attr("src", response.weather[0].icon);
+          const icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
           const date = new Date()
           const month = date.getMonth + 1;
           const day = date.getDay;
           const year = date.getFullYear;
           const cityName = $("<h2>").text(currentCity);
           
-        //   cityName.append(icon);
+          cityName.append(icon);
           
           
 
@@ -31,7 +31,7 @@ function displayWeather() {
 
           const tempF = Math.floor(tempNow * 9/5 - 459.67);
 
-          const tempP = $("<p>").text("Tempurature: " + tempF + "°F");
+          const tempP = $("<p>").text("Temperature: " + tempF + "°F");
 
           weatherDiv.append(tempP);
 
@@ -53,6 +53,57 @@ function displayWeather() {
       });
     
 }
+function displayForecast() {
+  //api.openweathermap.org/data/2.5/forecast?q={city name}
+  const city = $("#city-input").val().trim();
+    const key = "78a2773e0a415d0cc1dabef778996428"
+    const queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=" + key;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function(response) {
+          console.log(response);
+          console.log(response.weather[0].icon);
+          $(".forecast-view").empty();
+        const forecastDiv = $("<div class='forecastDiv'>");
+          const currentCity = response.name;
+          const icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
+          const cityName = $("<h2>").text(currentCity);
+          
+          cityName.append(icon);
+          
+          
+
+          forecastDiv.append(cityName);
+
+          // const tempNow = response.main.temp;
+
+          // const tempF = Math.floor(tempNow * 9/5 - 459.67);
+
+          // const tempP = $("<p>").text("Temperature: " + tempF + "°F");
+
+          // weatherDiv.append(tempP);
+
+          // const humidNow = response.main.humidity;
+
+          // const humidP = $("<p>").text("Humidity: " + humidNow + "%");
+
+          // weatherDiv.append(humidP);
+
+          // const windNow = response.wind.speed;
+
+          // const windP = $("<p>").text("Wind Speed: " + windNow + "mph");
+
+          // forecastrDiv.append(windP);
+
+          $(".forecast-view").prepend(forecastDiv);
+
+
+      });
+}
+const renderButtons = function(){
+  $("#city-buttons").empty();
 
 for (let i = 0; i < cities.length; i++) {
 
@@ -68,7 +119,9 @@ for (let i = 0; i < cities.length; i++) {
     // Providing the initial button text
     a.text(cities[i]);
     // Adding the button to the buttons-view div
-    $(".searchBar").append(a);
+    $("#city-buttons").append(a);
+    const br = $("<br>");
+    $(a).append(br);
   };
 
 
@@ -82,11 +135,13 @@ $("#add-city").on("click", function(event) {
   cities.push(search);
 
   // Calling renderButtons which handles the processing of our movie array
-//   renderButtons();
+  renderButtons();
+  console.log(cities);
 });
 
 // Adding a click event listener to all elements with a class of "movie-btn"
-$(document).on("click", ".city-btn", displayWeather);
-
+$(document).on("click", ".city-btn", displayForecast);
+};
 // Calling the renderButtons function to display the initial buttons
-// renderButtons();
+renderButtons();
+console.log(cities);

@@ -9,12 +9,15 @@
 </head>
 <body>
     <div class="container">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h1 class="display-4">WEATHER APP!</h1>
+              <p class="lead">Use the searchbar below to check the weather anywhere in the world!</p>
+            </div>
+          </div>
         <div class="row">
             <div class="col-sm-5">
                 <!--City Search-->
-                <h1>
-                    Search Div
-                </h1>
                 <div class="searchBar">
                     <form id="search-form">
                         <label for="city-input">What's the Weather in...</label>
@@ -24,6 +27,10 @@
                         <!-- Button triggers new movie to be added -->
                         <button id="add-city" class="btn btn-primary city-btn" type="submit" value="Search">Search</button>
                       </form>
+                      <br>
+                      <div id="city-buttons">
+
+                      </div>
                 </div>
             </div>
             <div class="col-sm-7">
@@ -34,9 +41,7 @@
                 </div>
                 <div class="row">
                     <!--5 Day Forecast-->
-                    <h1>
-                        5 Day Forecast Div
-                    </h1>
+                    <div class="forecast-view"></div>
                 </div>
             </div>
         </div>
