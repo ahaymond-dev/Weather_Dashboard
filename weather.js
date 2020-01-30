@@ -53,55 +53,7 @@ function displayWeather() {
       });
     
 }
-function displayForecast() {
-  //api.openweathermap.org/data/2.5/forecast?q={city name}
-  const city = $("#city-input").val().trim();
-    const key = "78a2773e0a415d0cc1dabef778996428"
-    const queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=" + key;
 
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).then(function(response) {
-          console.log(response);
-          console.log(response.weather[0].icon);
-          $(".forecast-view").empty();
-        const forecastDiv = $("<div class='forecastDiv'>");
-          const currentCity = response.name;
-          const icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
-          const cityName = $("<h2>").text(currentCity);
-          
-          cityName.append(icon);
-          
-          
-
-          forecastDiv.append(cityName);
-
-          // const tempNow = response.main.temp;
-
-          // const tempF = Math.floor(tempNow * 9/5 - 459.67);
-
-          // const tempP = $("<p>").text("Temperature: " + tempF + "°F");
-
-          // weatherDiv.append(tempP);
-
-          // const humidNow = response.main.humidity;
-
-          // const humidP = $("<p>").text("Humidity: " + humidNow + "%");
-
-          // weatherDiv.append(humidP);
-
-          // const windNow = response.wind.speed;
-
-          // const windP = $("<p>").text("Wind Speed: " + windNow + "mph");
-
-          // forecastrDiv.append(windP);
-
-          $(".forecast-view").prepend(forecastDiv);
-
-
-      });
-}
 const renderButtons = function(){
   $("#city-buttons").empty();
 
@@ -140,7 +92,7 @@ $("#add-city").on("click", function(event) {
 });
 
 // Adding a click event listener to all elements with a class of "movie-btn"
-$(document).on("click", ".city-btn", displayForecast);
+$(document).on("click", ".city-btn", displayWeather);
 };
 // Calling the renderButtons function to display the initial buttons
 renderButtons();
