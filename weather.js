@@ -3,7 +3,7 @@ const cities = [ ];
 function displayWeather() {
     const city = $("#city-input").val().trim();
     const key = "78a2773e0a415d0cc1dabef778996428"
-    const queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + key;
+    const queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + key;
 
     $.ajax({
         url: queryURL,
@@ -14,7 +14,7 @@ function displayWeather() {
           $(".weather-view").empty();
         const weatherDiv = $("<div class='weatherDiv'>");
           const currentCity = response.name;
-          const icon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
+          const icon = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png");
           const date = new Date()
           const month = date.getMonth + 1;
           const day = date.getDay;
@@ -58,7 +58,7 @@ function displayWeather() {
 function displayForecast() {
   const city = $("#city-input").val().trim();
   const key = "78a2773e0a415d0cc1dabef778996428"
-  const queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=" + key;
+  const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=" + key;
 
   $.ajax({
       url: queryURL,
@@ -72,7 +72,7 @@ function displayForecast() {
 
       for (let i = 0; i < forecast.length; i++) {
         const dayCard = $("<div class='card col-1-sm'>");
-        const iconF = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + forecast[i].weather[0].icon + "@2x.png");
+        const iconF = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + forecast[i].weather[0].icon + "@2x.png");
         const date = forecast[i].dt_txt.slice(0, 9)
         const day = $("<h4 class='card-title'>").text(date);
         dayCard.append(day); 
