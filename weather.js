@@ -1,4 +1,4 @@
-const cities = [];
+const cities = [ ];
 
 function displayWeather() {
     const city = $("#city-input").val().trim();
@@ -10,7 +10,7 @@ function displayWeather() {
         method: "GET"
       }).then(function(response) {
           console.log(response);
-          console.log(response.weather[0].icon);
+          // console.log(response.weather[0].icon);
           $(".weather-view").empty();
         const weatherDiv = $("<div class='weatherDiv'>");
           const currentCity = response.name;
@@ -20,7 +20,7 @@ function displayWeather() {
           const day = date.getDay;
           const year = date.getFullYear;
           const cityName = $("<h2>").text(currentCity);
-          
+          console.log(month + "/" + day + "/" + year);
           cityName.append(icon);
           
           
@@ -51,7 +51,45 @@ function displayWeather() {
 
 
       });
+
+      displayForecast();
     
+}
+function displayForecast() {
+  const city = $("#city-input").val().trim();
+  const key = "78a2773e0a415d0cc1dabef778996428"
+  const queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&APPID=" + key;
+
+  $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+        console.log(response);
+     
+        $(".forecast-view").empty();
+      const forecastDiv = $("<div class='forecastDiv row'>");
+      const forecast = [response.list[6], response.list[14], response.list[22], response.list[30], response.list[38]];
+
+      for (let i = 0; i < forecast.length; i++) {
+        const dayCard = $("<div class='card col-1-sm'>");
+        const iconF = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + forecast[i].weather[0].icon + "@2x.png");
+        const date = forecast[i].dt_txt.slice(0, 9)
+        const day = $("<h4 class='card-title'>").text(date);
+        dayCard.append(day); 
+        day.append(iconF);
+        const tempFuture = forecast[i].main.temp;
+        const tempF = Math.floor(tempFuture * 9/5 - 459.67);
+        const tempP = $("<p class='card-body'>").text("Temperature: " + tempF + "°F");
+        dayCard.append(tempP)
+        forecastDiv.append(dayCard);
+      }
+        const forecastTitle = $("<h2>").text("5 Day Forecast");
+        $(".forecast-view").prepend(forecastTitle)
+        $(".forecast-view").append(forecastDiv);
+
+
+    });
+  
 }
 
 const renderButtons = function(){
@@ -78,7 +116,7 @@ for (let i = 0; i < cities.length; i++) {
 
 
 // This function handles events where a movie button is clicked
-$("#add-city").on("click", function(event) {
+$(".city-btn").on("click", function(event) {
   event.preventDefault();
   // This line grabs the input from the textbox
   const search = $("#city-input").val().trim();
@@ -88,7 +126,7 @@ $("#add-city").on("click", function(event) {
 
   // Calling renderButtons which handles the processing of our movie array
   renderButtons();
-  console.log(cities);
+  // console.log(cities);
 });
 
 // Adding a click event listener to all elements with a class of "movie-btn"
@@ -96,4 +134,4 @@ $(document).on("click", ".city-btn", displayWeather);
 };
 // Calling the renderButtons function to display the initial buttons
 renderButtons();
-console.log(cities);
+// console.log(cities);
