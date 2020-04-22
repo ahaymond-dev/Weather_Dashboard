@@ -73,7 +73,7 @@ function displayForecast() {
       for (let i = 0; i < forecast.length; i++) {
         const dayCard = $("<div class='card col-1-sm'>");
         const iconF = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + forecast[i].weather[0].icon + "@2x.png");
-        const date = forecast[i].dt_txt.slice(0, 9)
+        const date = forecast[i].dt_txt.slice(0, 10)
         const day = $("<h4 class='card-title'>").text(date);
         dayCard.append(day); 
         day.append(iconF);
